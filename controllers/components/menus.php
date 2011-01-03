@@ -1,7 +1,7 @@
 <?php
 
 /*
- * class Menus
+ * class MenusComponent
  */
 
 class MenusComponent extends object {
@@ -9,6 +9,32 @@ class MenusComponent extends object {
 	
 	var $__menus_for_layout;
 	var $__settings;
+/**
+ * parsed ini file values.
+ *
+ * @var array
+ */
+  protected $_iniFile;
+        
+        
+        /*
+         * function __construct
+         * @param $options
+         */
+        
+        function __construct($options = array()) {
+            
+  if (!empty($options['iniFile'])) {
+	  $iniFile = $options['iniFile'];
+  } else {
+	  $iniFile = CONFIGS . 'navigation.ini';
+  }
+  if (!file_exists($iniFile)) {
+	  $iniFile = App::pluginPath('Navigation') . 'config' . DS . 'config.ini';
+  }
+  $this->_iniFile = parse_ini_file($iniFile, true);
+        }
+        
 
 /**
  * Called before the Controller::beforeFilter().
@@ -22,6 +48,9 @@ class MenusComponent extends object {
 		if (!isset($this->__settings[$controller->name])) {
 			$settings = $this->__settings[$controller->name];
 		}
+                
+                debug($controller);
+                debug($this);die();
 	}
 
 /**
@@ -44,6 +73,7 @@ class MenusComponent extends object {
  * @access public
  */
 	function beforeRender(&$controller) {
+            // convert __menus_for_layout to menus_for_layout
 	}
 
 /**
