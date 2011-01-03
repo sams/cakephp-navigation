@@ -49,8 +49,8 @@ class MenusComponent extends object {
 			$settings = $this->__settings[$controller->name];
 		}
                 
-                debug($controller);
-                debug($this);die();
+                #debug($controller);
+                #debug($this);die();
 	}
 
 /**
@@ -62,6 +62,7 @@ class MenusComponent extends object {
  * @link http://book.cakephp.org/view/65/MVC-Class-Access-Within-Components
  */
 	function startup(&$controller) {
+            $this->_get_menu();
 	}
 
 /**
@@ -84,6 +85,12 @@ class MenusComponent extends object {
  * @access public
  */
 	function shutdown(&$controller) {
+	}
+        
+	function _get_menu($slug = 'Articles') {
+            App::import('Model', 'Navigation.Menu');
+            $this->Menu = new Menu();
+            debug($this->Menu->findBySlug($slug));
 	}
 }
 
