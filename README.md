@@ -7,4 +7,17 @@
 
 `git submodule add git://github.com/sams/navigation.git plugins/navigation`
 
-## Based on ideas seen in Croogo, Wildflower & thoughts of Jeremy Burns, Jonathon Snook
+## Based Upon Concepts Seen in:
+* Croogo
+* Wildflower
+
+and mentioned by
+
+* Jeremy Burns
+* Jonathon Snook
+
+
+### Todo
+
+make it possible to add meni items to a position from with views
+enable db set menus using slugs and nestable menu items also
