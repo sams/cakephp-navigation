@@ -160,9 +160,9 @@
      
      foreach($items as $key => $item) {
       $options = (isset($titles[$key])) ? array_merge($_options, array('title' => $titles[$key])) : null;
-      $_items.= $this->Html->link($key, $item, $options);
+      $_items.= $this->Html->tag('li', $this->Html->link($key, $item, $options), null);
      }
-     return $_items;
+     return $this->Html->tag('ul', $_items);
     }
  
  }
