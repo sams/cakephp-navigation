@@ -26,7 +26,7 @@ class MenusController extends AppController {
  * @access public
  */
 	public function admin_index() {
-		$this->Menu->recursive = 0;
+		$this->Menu->recursive = 1;
 		$this->set('menus', $this->paginate()); 
 	}
 
