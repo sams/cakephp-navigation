@@ -16,6 +16,10 @@ class MenusController extends AppController {
  */
 	public $helpers = array('Html', 'Form');
 
+	public function beforeFilter() {
+		parent::beforeFilter(); 
+	}
+
 /**
  * Admin index for menu.
  * 
