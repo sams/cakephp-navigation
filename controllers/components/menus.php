@@ -61,7 +61,6 @@ class MenusComponent extends object {
  */
 	function startup(&$controller) {
 		// auto check if slug exists for controller action load if so
-			$this->Controller = $controller;
 	}
 
 /**
@@ -91,7 +90,7 @@ class MenusComponent extends object {
 				}
 			}
 			
-			$this->Controller->set('navsForLayout', $menus);
+			$controller->set('navsForLayout', $menus);
 	}
 
 /**
