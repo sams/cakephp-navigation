@@ -32,9 +32,9 @@ foreach ($menus as $menu):
 			<?php echo $menu['Menu']['slug']; ?>
 		</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $menu['Menu']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $menu['Menu']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $menu['Menu']['id'])); ?>
+			<?php echo $this->Html->link(__('View', true), array('admin' => true, 'plugin' => 'navigation', 'action' => 'view', $menu['Menu']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit', true), array('admin' => true, 'plugin' => 'navigation', 'action' => 'edit', $menu['Menu']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete', true), array('admin' => true, 'plugin' => 'navigation', 'action' => 'delete', $menu['Menu']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -44,8 +44,8 @@ foreach ($menus as $menu):
 
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('New Menu', true), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Menu Items', true), array('controller' => 'menu_items', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Menu Item', true), array('controller' => 'menu_items', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Menu', true), array('admin' => true, 'plugin' => 'navigation', 'action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Menu Items', true), array('admin' => true, 'plugin' => 'navigation', 'controller' => 'menu_items', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Menu Item', true), array('admin' => true, 'plugin' => 'navigation', 'controller' => 'menu_items', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
