@@ -15,26 +15,24 @@ class MenusComponent extends object {
  * @var array
  */
   protected $_iniFile;
+  protected $Controller;
         
         
-        /*
-         * function __construct
-         * @param $options
-         */
-        
-        function __construct($options = array()) {
-            
-  if (!empty($options['iniFile'])) {
-	  $iniFile = $options['iniFile'];
-  } else {
-	  $iniFile = CONFIGS . 'navigation.ini';
-  }
-  if (!file_exists($iniFile)) {
-	  $iniFile = App::pluginPath('Navigation') . 'config' . DS . 'config.ini';
-  }
-  $this->_iniFile = parse_ini_file($iniFile, true);
-        }
-        
+/**
+ * function __construct
+ * @param $options
+ */
+		function __construct($options = array()) {
+			if (!empty($options['iniFile'])) {
+				$iniFile = $options['iniFile'];
+			} else {
+				$iniFile = CONFIGS . 'navigation.ini';
+			}
+			if (!file_exists($iniFile)) {
+				$iniFile = App::pluginPath('Navigation') . 'config' . DS . 'config.ini';
+			}
+			$this->_iniFile = parse_ini_file($iniFile, true);
+		}
 
 /**
  * Called before the Controller::beforeFilter().
@@ -48,9 +46,9 @@ class MenusComponent extends object {
 		if (!isset($this->__settings[$controller->name])) {
 			$settings = $this->__settings[$controller->name];
 		}
-                
-                #debug($controller);
-                #debug($this);die();
+		
+		#debug($controller);
+		#debug($this);die();
 	}
 
 /**
@@ -62,7 +60,18 @@ class MenusComponent extends object {
  * @link http://book.cakephp.org/view/65/MVC-Class-Access-Within-Components
  */
 	function startup(&$controller) {
-            $this->_get_menu();
+		// auto check if slug exists for controller action load if so
+			$this->Controller = $controller;
+	}
+
+/**
+ * addMenu
+ * 
+ * @param $arg
+ * @return $arg
+ */
+	public function addMenu($slug) {
+	  $this->__menus_for_layout[] = $slug;
 	}
 
 /**
@@ -74,7 +83,15 @@ class MenusComponent extends object {
  * @access public
  */
 	function beforeRender(&$controller) {
-            // convert __menus_for_layout to menus_for_layout
+			$menus = array();
+			// convert __menus_for_layout to menus_for_layout
+			if($this->__menus_for_layout > array()) {
+				foreach($this->__menus_for_layout as $slug) {
+					$menus[$slug] = $this->_get_menu($slug);
+				}
+			}
+			
+			$this->Controller->set('navsForLayout', $menus);
 	}
 
 /**
@@ -87,10 +104,11 @@ class MenusComponent extends object {
 	function shutdown(&$controller) {
 	}
         
-	function _get_menu($slug = 'Articles') {
+	function _get_menu($slug = 'ss33') {
             App::import('Model', 'Navigation.Menu');
             $this->Menu = new Menu();
-            debug($this->Menu->findBySlug($slug));
+            $this->Menu->recursive = 1;
+            return $this->Menu->findBySlug($slug);
 	}
 }
 
