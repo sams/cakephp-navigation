@@ -139,22 +139,27 @@ class NavigationHelper extends AppHelper {
 	 * @param $options - leave null for default wrappers
 	 */
 	function create($section = 'main', $array_items = array(), $options = null) {
-		$_items = ''; $_options = $hitems = array(); $link = $display = '';
+		$_items = ''; $liOptions = $_options = $hitems = array(); $link = $display = '';
 		
 		$items = $this->_iniFile[ucfirst($section).'.links'];
 		$titles = $this->_iniFile[ucfirst($section).'.titles'];
 		foreach($array_items as $k => $v) {
-			$hitems[$v['display']] = $v['link'];
-			if(isset($v['title'])) {
-				$titles[$v['display']] = $v['title'];
+			if(!empty($v['display'])) {
+				$hitems[$v['display']] = $v['link'];
+				if(isset($v['title'])) {
+					$titles[$v['display']] = $v['title'];
+				}
+			} elseif(!empty($v['content'])) {
+			  $hitems[$v['content']] = false;
 			}
 		}
-		$items = array_merge($items, $hitems);
 		
+		$items = array_merge($items, $hitems);
 		
 		foreach($items as $key => $item) {
 			$options = (isset($titles[$key])) ? array_merge($_options, array('title' => $titles[$key])) : null;
-			$_items.= $this->Html->tag('li', $this->Html->link($key, $item, $options), null);
+			$display = !$item ? $key : $this->Html->link($key, $item, $options);
+			$_items.= $this->Html->tag('li', $display, $liOptions);
 		}
 		return $this->Html->tag('ul', $_items);
 	}
